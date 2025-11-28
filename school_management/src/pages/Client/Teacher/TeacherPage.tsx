@@ -14,13 +14,14 @@ import type { ISubject } from '../../../types/ISubject';
 import { getSubject } from '../../../api/subject';
 import { getClass } from '../../../api/classes';
 import type { IClass } from '../../../types/IClass';
+import { UserAddOutlined } from '@ant-design/icons';
 
 const TeacherPage = () => {
     const dispatch = useAppDispatch();
     const query = useAppSelector((state) => state.filter.query);
     const queryDebounce = useDebounce(query, 500);
 
-    //List Data + query
+    //List DataTeacher + query
     const {
         data: dataTeacher,
         isPending,
@@ -32,17 +33,22 @@ const TeacherPage = () => {
             return data;
         },
     });
+
+    //List DataSubject 
+
     const { data: dataSubject } = useQuery({
         queryKey: ['subject'],
         queryFn: async () => {
-            const { data } = await getSubject(queryDebounce);
+            const { data } = await getSubject();
             return data;
         },
     });
+
+    //List DataClass
     const { data: dataClass } = useQuery({
         queryKey: ['class'],
         queryFn: async () => {
-            const { data } = await getClass(queryDebounce);
+            const { data } = await getClass();
             return data;
         },
     });
@@ -143,7 +149,9 @@ const TeacherPage = () => {
                         ]}
                         onChange={(e) => dispatch(setQueryFilter({ ...query, _sort: e }))}
                     />
-                    <Button>Thêm</Button>
+                    <Button style={{ fontSize: 16}}>
+                        <UserAddOutlined />
+                    </Button>
                 </div>
             </div>
             <Table columns={columns} dataSource={dataTeacher} rowKey="_id" />

@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { Button, Select, Space, Spin, Table } from 'antd';
+import { Button, Select, Space, Spin, Table, Tag } from 'antd';
 import { toast } from 'react-toastify';
 import { quertClient } from '../../../api/useQuery';
 
@@ -10,6 +10,8 @@ import { useDebounce } from '../../../hooks/useDebounce';
 import { SEX } from '../../../ultis/constant';
 import { deleteStudent, getStudent } from '../../../api/student';
 import type { IStudent } from '../../../types/IStudent';
+import { getClass } from '../../../api/classes';
+import type { IClass } from '../../../types/IClass';
 
 const ListStudent = () => {
     const key = 'student';
@@ -27,6 +29,14 @@ const ListStudent = () => {
         staleTime: 100,
     });
 
+    //List DataClass
+    const { data: dataClass } = useQuery({
+        queryKey: ['class'],
+        queryFn: async () => {
+            const { data } = await getClass();
+            return data;
+        },
+    });
     //Xóa Teacher
     const mutationDelete = useMutation({
         mutationKey: [key],
@@ -48,12 +58,13 @@ const ListStudent = () => {
         },
 
         {
-            title: 'Lớp',
+            title: 'Khối',
             dataIndex: 'grade',
         },
+
         {
-            title: 'Ngày sinh',
-            dataIndex: 'birthday',
+            title: 'Địa chỉ',
+            dataIndex: 'address',
         },
         {
             title: 'Giới tính',
@@ -62,12 +73,13 @@ const ListStudent = () => {
         },
         {
             title: 'lớp',
-            dataIndex: 'classId',
+            dataIndex: 'class',
+            render: (_: any, record: IStudent) => {
+                const data = dataClass?.find((item: IClass) => item._id == record.class);
+                return <Tag>{data?.name}</Tag>;
+            },
         },
-        {
-            title: 'Chủ nhiệm lớp',
-            dataIndex: 'parentId',
-        },
+
         {
             title: 'Actions',
             render: (_: any, record: IStudent) => (
@@ -85,7 +97,7 @@ const ListStudent = () => {
     return (
         <div>
             <div className="flex items-center justify-between gap-2">
-                <h1 className="mb-4 font-bold text-xl">Danh sách Giáo viên</h1>
+                <h1 className="mb-4 font-bold text-xl">Danh sách Học Sinh</h1>
 
                 <div className="flex gap-2 items-center">
                     <Search
@@ -97,7 +109,7 @@ const ListStudent = () => {
                         Reset
                     </Button>
                     <Select
-                        defaultValue="Nữ"
+                        defaultValue={SEX.FEMALE.label}
                         style={{ width: 120 }}
                         options={[
                             { value: SEX.FEMALE.data, label: SEX.FEMALE.label },
