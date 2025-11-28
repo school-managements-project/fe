@@ -8,7 +8,8 @@ const StudentPage = () => {
         <div className="flex gap-4 w-full">
             {/* LEFT MAIN */}
             <div className="w-3/4 flex  bg-gray-100 rounded-xl flex-col gap-6 min-w-0">
-                <div className='bg-white p-4 rounded-2xl'>
+                <div className="h-full bg-white p-4 rounded-md">
+                    <h1 className="text-xl font-semibold">Schedule (4A)</h1>
                     <BigCalendar />
                 </div>
             </div>

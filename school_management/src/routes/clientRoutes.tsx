@@ -1,6 +1,7 @@
 import LayoutClient from '../layouts/LayoutClient';
 import AdminPage from '../pages/Client/Admin/AdminPage';
-import StudentPage from '../pages/Client/Student/StudentPage';
+import ListStudent from '../pages/Client/Student/ListStudent';
+import TeacherPage from '../pages/Client/Teacher/TeacherPage';
 
 const clientRoutes = [
     {
@@ -12,8 +13,12 @@ const clientRoutes = [
                 Component: AdminPage,
             },
             {
-                path: 'student',
-                Component: StudentPage,
+                path: 'students',
+                Component: ListStudent,
+            },
+            {
+                path: 'teachers',
+                Component: TeacherPage,
             },
         ],
     },

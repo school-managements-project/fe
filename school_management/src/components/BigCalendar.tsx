@@ -1,155 +1,77 @@
-import React, { useState } from 'react';
-import { Calendar, momentLocalizer } from 'react-big-calendar';
+import { Calendar, momentLocalizer, Views } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import type { View } from 'react-calendar/dist/shared/types.js';
+import { useState } from 'react';
 const localizer = momentLocalizer(moment);
 const calendarEvents = [
     {
         title: 'Math',
         allDay: false,
-        start: new Date(2024, 7, 12, 8, 0),
-        end: new Date(2024, 7, 12, 8, 45),
+        start: new Date(2025, 10, 24, 8, 0), // Thứ Hai, 24/11/2025
+        end: new Date(2025, 10, 24, 8, 45),
     },
     {
         title: 'English',
         allDay: false,
-        start: new Date(2024, 7, 12, 9, 0),
-        end: new Date(2024, 7, 12, 9, 45),
+        start: new Date(2025, 10, 24, 9, 0),
+        end: new Date(2025, 10, 24, 9, 45),
     },
     {
         title: 'Biology',
         allDay: false,
-        start: new Date(2024, 7, 12, 10, 0),
-        end: new Date(2024, 7, 12, 10, 45),
+        start: new Date(2025, 10, 24, 10, 0),
+        end: new Date(2025, 10, 24, 10, 45),
     },
     {
         title: 'Physics',
         allDay: false,
-        start: new Date(2024, 7, 12, 11, 0),
-        end: new Date(2024, 7, 12, 11, 45),
+        start: new Date(2025, 10, 25, 11, 0), // Thứ Ba, 25/11
+        end: new Date(2025, 10, 25, 11, 45),
     },
     {
         title: 'Chemistry',
         allDay: false,
-        start: new Date(2024, 7, 12, 13, 0),
-        end: new Date(2024, 7, 12, 13, 45),
+        start: new Date(2025, 10, 26, 13, 0), // Thứ Tư, 26/11
+        end: new Date(2025, 10, 26, 13, 45),
     },
     {
         title: 'History',
         allDay: false,
-        start: new Date(2024, 7, 12, 14, 0),
-        end: new Date(2024, 7, 12, 14, 45),
-    },
-    {
-        title: 'English',
-        allDay: false,
-        start: new Date(2024, 7, 13, 9, 0),
-        end: new Date(2024, 7, 13, 9, 45),
-    },
-    {
-        title: 'Biology',
-        allDay: false,
-        start: new Date(2024, 7, 13, 10, 0),
-        end: new Date(2024, 7, 13, 10, 45),
-    },
-    {
-        title: 'Physics',
-        allDay: false,
-        start: new Date(2024, 7, 13, 11, 0),
-        end: new Date(2024, 7, 13, 11, 45),
-    },
-
-    {
-        title: 'History',
-        allDay: false,
-        start: new Date(2024, 7, 13, 14, 0),
-        end: new Date(2024, 7, 13, 14, 45),
+        start: new Date(2025, 10, 27, 14, 0), // Thứ Năm, 27/11
+        end: new Date(2025, 10, 27, 14, 45),
     },
     {
         title: 'Math',
         allDay: false,
-        start: new Date(2024, 7, 14, 8, 0),
-        end: new Date(2024, 7, 14, 8, 45),
-    },
-    {
-        title: 'Biology',
-        allDay: false,
-        start: new Date(2024, 7, 14, 10, 0),
-        end: new Date(2024, 7, 14, 10, 45),
-    },
-
-    {
-        title: 'Chemistry',
-        allDay: false,
-        start: new Date(2024, 7, 14, 13, 0),
-        end: new Date(2024, 7, 14, 13, 45),
-    },
-    {
-        title: 'History',
-        allDay: false,
-        start: new Date(2024, 7, 14, 14, 0),
-        end: new Date(2024, 7, 13, 14, 45),
+        start: new Date(2025, 10, 28, 8, 0), // HÔM NAY, 28/11/2025
+        end: new Date(2025, 10, 28, 8, 45),
     },
     {
         title: 'English',
         allDay: false,
-        start: new Date(2024, 7, 15, 9, 0),
-        end: new Date(2024, 7, 15, 9, 45),
-    },
-    {
-        title: 'Biology',
-        allDay: false,
-        start: new Date(2024, 7, 15, 10, 0),
-        end: new Date(2024, 7, 15, 10, 45),
+        start: new Date(2025, 10, 28, 9, 0),
+        end: new Date(2025, 10, 28, 9, 45),
     },
     {
         title: 'Physics',
         allDay: false,
-        start: new Date(2024, 7, 15, 11, 0),
-        end: new Date(2024, 7, 15, 11, 45),
-    },
-
-    {
-        title: 'History',
-        allDay: false,
-        start: new Date(2024, 7, 15, 14, 0),
-        end: new Date(2024, 7, 15, 14, 45),
-    },
-    {
-        title: 'Math',
-        allDay: false,
-        start: new Date(2024, 7, 16, 8, 0),
-        end: new Date(2024, 7, 16, 8, 45),
-    },
-    {
-        title: 'English',
-        allDay: false,
-        start: new Date(2024, 7, 16, 9, 0),
-        end: new Date(2024, 7, 16, 9, 45),
-    },
-
-    {
-        title: 'Physics',
-        allDay: false,
-        start: new Date(2024, 7, 16, 11, 0),
-        end: new Date(2024, 7, 16, 11, 45),
-    },
-    {
-        title: 'Chemistry',
-        allDay: false,
-        start: new Date(2024, 7, 16, 13, 0),
-        end: new Date(2024, 7, 16, 13, 45),
+        start: new Date(2025, 10, 28, 11, 0),
+        end: new Date(2025, 10, 28, 11, 45),
     },
     {
         title: 'History',
         allDay: false,
-        start: new Date(2024, 7, 16, 14, 0),
-        end: new Date(2024, 7, 16, 14, 45),
+        start: new Date(2025, 10, 29, 14, 0), // Thứ Sáu, 29/11
+        end: new Date(2025, 10, 29, 14, 45),
     },
 ];
+
 const BigCalendar = () => {
-    const [view, setView] = useState<View>(Views.WORK_WEEKS);
+    const [view, setView] = useState<string>(Views.WORK_WEEK);
+    const handleOnChangeView = (selectedView: string) => {
+        setView(selectedView);
+    };
+
     return (
         <div>
             <Calendar
@@ -157,9 +79,13 @@ const BigCalendar = () => {
                 events={calendarEvents}
                 startAccessor="start"
                 endAccessor="end"
-                views={['work_weeks', 'day']}
+                views={['work_week', 'day']}
                 view={view}
                 style={{ height: 500 }}
+                onView={handleOnChangeView}
+                defaultDate={new Date()}
+                min={new Date(2025, 0, 1, 7, 0)} // 7h sáng
+                max={new Date(2025, 0, 1, 18, 0)} // 6h chiều
             />
         </div>
     );
