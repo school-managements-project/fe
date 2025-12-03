@@ -1,8 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Button, Select, Space, Spin, Table, Tag } from 'antd';
 import { toast } from 'react-toastify';
-import { quertClient } from '../../../api/useQuery';
-
+import { queryClient } from '../../../api/useQuery';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import Search from 'antd/es/input/Search';
 import { resetQueryFilter, setQueryFilter } from '../../../feature/querySLice';
@@ -15,12 +14,12 @@ import { getSubject } from '../../../api/subject';
 import { getClass } from '../../../api/classes';
 import type { IClass } from '../../../types/IClass';
 import { UserAddOutlined } from '@ant-design/icons';
+import FormModalTeacher from './FormModalTeacher';
 
 const TeacherPage = () => {
     const dispatch = useAppDispatch();
     const query = useAppSelector((state) => state.filter.query);
     const queryDebounce = useDebounce(query, 500);
-
     //List DataTeacher + query
     const {
         data: dataTeacher,
@@ -34,7 +33,7 @@ const TeacherPage = () => {
         },
     });
 
-    //List DataSubject 
+    //List DataSubject
 
     const { data: dataSubject } = useQuery({
         queryKey: ['subject'],
@@ -57,7 +56,7 @@ const TeacherPage = () => {
         mutationKey: ['teacher'],
         mutationFn: (_id: string) => deleteTeacher(_id),
         onSuccess: () => {
-            quertClient.invalidateQueries({ queryKey: ['teacher', query] });
+            queryClient.invalidateQueries({ queryKey: ['teacher', query] });
             toast.success('Xóa thành công');
         },
     });
@@ -76,10 +75,10 @@ const TeacherPage = () => {
             title: 'Địa chỉ',
             dataIndex: 'address',
         },
-        {
-            title: 'Ngày sinh',
-            dataIndex: 'birthday',
-        },
+        // {
+        //     title: 'Ngày sinh',
+        //     dataIndex: 'birthday',
+        // },
         {
             title: 'Giới tính',
             dataIndex: 'sex',
@@ -104,7 +103,6 @@ const TeacherPage = () => {
             render: (_: any, record: ITeacher) =>
                 record?.classes?.length > 0 ? (
                     record?.classes?.map((classId) => {
-                        console.log(classId);
                         const data = dataClass?.find((c: IClass) => c._id === classId);
                         return <Tag>{data?.name}</Tag>;
                     })
@@ -117,7 +115,9 @@ const TeacherPage = () => {
             render: (_: any, record: ITeacher) => (
                 <Space>
                     <Button onClick={() => mutationDelete.mutate(String(record._id))}>Xóa</Button>
-                    <Button>Sửa</Button>
+                    <FormModalTeacher idTeacher={String(record._id)}>
+                        <Button>Sửa</Button>
+                    </FormModalTeacher>
                 </Space>
             ),
         },
@@ -125,6 +125,8 @@ const TeacherPage = () => {
 
     if (isPending) return <Spin />;
     if (error) return 'An error has occurred: ' + error;
+
+    // Form ADD
 
     return (
         <div>
@@ -149,12 +151,15 @@ const TeacherPage = () => {
                         ]}
                         onChange={(e) => dispatch(setQueryFilter({ ...query, _sort: e }))}
                     />
-                    <Button style={{ fontSize: 16}}>
-                        <UserAddOutlined />
-                    </Button>
+                    {/* Modal Thêm sản phẩm */}
+                    <FormModalTeacher>
+                        <Button style={{ fontSize: 16 }}>
+                            <UserAddOutlined />
+                        </Button>
+                    </FormModalTeacher>
                 </div>
             </div>
-            <Table columns={columns} dataSource={dataTeacher} rowKey="_id" />
+            <Table className="mt-4" columns={columns} dataSource={dataTeacher} rowKey={`_id`} />
         </div>
     );
 };

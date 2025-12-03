@@ -20,6 +20,10 @@ const clientRoutes = [
                 path: 'teachers',
                 Component: TeacherPage,
             },
+            {
+                path: 'teachers/:id',
+                Component: TeacherPage,
+            },
         ],
     },
 ];

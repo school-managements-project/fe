@@ -1,7 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Button, Select, Space, Spin, Table, Tag } from 'antd';
 import { toast } from 'react-toastify';
-import { quertClient } from '../../../api/useQuery';
 
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import Search from 'antd/es/input/Search';
@@ -12,6 +11,7 @@ import { deleteStudent, getStudent } from '../../../api/student';
 import type { IStudent } from '../../../types/IStudent';
 import { getClass } from '../../../api/classes';
 import type { IClass } from '../../../types/IClass';
+import { queryClient } from '../../../api/useQuery';
 
 const ListStudent = () => {
     const key = 'student';
@@ -42,7 +42,7 @@ const ListStudent = () => {
         mutationKey: [key],
         mutationFn: (_id: string) => deleteStudent(_id),
         onSuccess: () => {
-            quertClient.invalidateQueries({ queryKey: [key] });
+            queryClient.invalidateQueries({ queryKey: [key] });
             toast.success('Xóa thành công');
         },
     });
