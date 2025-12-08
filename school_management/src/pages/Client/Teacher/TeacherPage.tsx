@@ -15,6 +15,7 @@ import { getClass } from '../../../api/classes';
 import type { IClass } from '../../../types/IClass';
 import { UserAddOutlined } from '@ant-design/icons';
 import FormModalTeacher from './FormModalTeacher';
+import { getTeacherAtRedux } from '../../../feature/teacherSlice';
 
 const TeacherPage = () => {
     const dispatch = useAppDispatch();
@@ -29,6 +30,12 @@ const TeacherPage = () => {
         queryKey: ['teacher', queryDebounce],
         queryFn: async () => {
             const { data } = await getTeacher(queryDebounce);
+            dispatch(
+                getTeacherAtRedux({
+                    getAllTeacher: data,
+                    total: data.length,
+                }),
+            );
             return data;
         },
     });
@@ -126,8 +133,6 @@ const TeacherPage = () => {
     if (isPending) return <Spin />;
     if (error) return 'An error has occurred: ' + error;
 
-    // Form ADD
-
     return (
         <div>
             <div className="flex items-center justify-between gap-2">
@@ -136,7 +141,7 @@ const TeacherPage = () => {
                 <div className="flex gap-2 items-center">
                     <Search
                         placeholder="Search ..."
-                        onChange={(e) => dispatch(setQueryFilter({ q: e.target.value }))}
+                        onChange={(e) => dispatch(setQueryFilter({ ...query, q: e.target.value }))}
                         enterButton
                     />
                     <Button color="blue" onClick={() => dispatch(resetQueryFilter())}>
@@ -149,7 +154,7 @@ const TeacherPage = () => {
                             { value: SEX.FEMALE.data, label: SEX.FEMALE.label },
                             { value: SEX.MALE.data, label: SEX.MALE.label },
                         ]}
-                        onChange={(e) => dispatch(setQueryFilter({ ...query, _sort: e }))}
+                        onChange={(e) => dispatch(setQueryFilter({ ...query, sex: e }))}
                     />
                     {/* Modal Thêm sản phẩm */}
                     <FormModalTeacher>

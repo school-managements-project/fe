@@ -1,14 +1,11 @@
-import type { IClass } from './IClass';
-
 export interface IStudent {
-    _id: string;
-    studentId: string;
-    sex: string;
+    _id?: string | number;
+    studentId?: string;
+    sex: 'female' | 'male';
     name: string;
     email: string;
-    photo: string;
+    photo?: string;
     phone: string;
-    grade: number;
-    class: IClass | string;
+    class: string;
     address: string;
 }

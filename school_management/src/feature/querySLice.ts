@@ -9,6 +9,7 @@ const initialState: State = {
         _limit: 10,
         _page: 1,
         q: '',
+        sex: ''
     },
 };
 export const querySlice = createSlice({

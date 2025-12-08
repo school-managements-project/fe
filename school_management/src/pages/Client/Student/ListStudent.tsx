@@ -1,7 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Button, Select, Space, Spin, Table, Tag } from 'antd';
 import { toast } from 'react-toastify';
-
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import Search from 'antd/es/input/Search';
 import { resetQueryFilter, setQueryFilter } from '../../../feature/querySLice';
@@ -12,6 +11,9 @@ import type { IStudent } from '../../../types/IStudent';
 import { getClass } from '../../../api/classes';
 import type { IClass } from '../../../types/IClass';
 import { queryClient } from '../../../api/useQuery';
+import { UserAddOutlined } from '@ant-design/icons';
+import FormModalStudent from './FormModalStudent';
+import { getStudentAtRedux } from '../../../feature/studentSlice';
 
 const ListStudent = () => {
     const key = 'student';
@@ -19,14 +21,19 @@ const ListStudent = () => {
     const query = useAppSelector((state) => state.filter.query);
     const queryDebounce = useDebounce(query, 500);
 
-    //List Data + query
+    //List Data + query Student
     const { data, isPending, error } = useQuery({
         queryKey: [key, queryDebounce],
         queryFn: async () => {
             const { data } = await getStudent(queryDebounce);
+            dispatch(
+                getStudentAtRedux({
+                    getAllStudent: data,
+                    total: data.length,
+                }),
+            );
             return data;
         },
-        staleTime: 100,
     });
 
     //List DataClass
@@ -37,7 +44,7 @@ const ListStudent = () => {
             return data;
         },
     });
-    //Xóa Teacher
+    //Xóa Student
     const mutationDelete = useMutation({
         mutationKey: [key],
         mutationFn: (_id: string) => deleteStudent(_id),
@@ -58,8 +65,8 @@ const ListStudent = () => {
         },
 
         {
-            title: 'Khối',
-            dataIndex: 'grade',
+            title: 'Email',
+            dataIndex: 'email',
         },
 
         {
@@ -72,10 +79,10 @@ const ListStudent = () => {
             render: (_: any, record: IStudent) => (record.sex == 'male' ? 'Nam' : 'Nữ'),
         },
         {
-            title: 'lớp',
+            title: 'Lớp học',
             dataIndex: 'class',
             render: (_: any, record: IStudent) => {
-                const data = dataClass?.find((item: IClass) => item._id == record.class);
+                const data = dataClass?.find((c: IClass) => String(c._id) === String(record.class));
                 return <Tag>{data?.name}</Tag>;
             },
         },
@@ -85,7 +92,9 @@ const ListStudent = () => {
             render: (_: any, record: IStudent) => (
                 <Space>
                     <Button onClick={() => mutationDelete.mutate(String(record._id))}>Xóa</Button>
-                    <Button>Sửa</Button>
+                    <FormModalStudent idStudent={String(record._id)}>
+                        <Button>Sửa</Button>
+                    </FormModalStudent>
                 </Space>
             ),
         },
@@ -115,9 +124,13 @@ const ListStudent = () => {
                             { value: SEX.FEMALE.data, label: SEX.FEMALE.label },
                             { value: SEX.MALE.data, label: SEX.MALE.label },
                         ]}
-                        onChange={(e) => dispatch(setQueryFilter({ ...query, _sort: e }))}
+                        onChange={(e) => dispatch(setQueryFilter({ ...query, sex: e }))}
                     />
-                    <Button>Thêm</Button>
+                    <FormModalStudent>
+                        <Button style={{ fontSize: 16 }}>
+                            <UserAddOutlined />
+                        </Button>
+                    </FormModalStudent>
                 </div>
             </div>
             <Table columns={columns} dataSource={data} rowKey="_id" />

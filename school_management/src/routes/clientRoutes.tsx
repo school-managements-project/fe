@@ -17,6 +17,10 @@ const clientRoutes = [
                 Component: ListStudent,
             },
             {
+                path: 'students/:id',
+                Component: ListStudent,
+            },
+            {
                 path: 'teachers',
                 Component: TeacherPage,
             },

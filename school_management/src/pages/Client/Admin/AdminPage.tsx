@@ -7,39 +7,41 @@ import AttendanceChart from '../../../components/AttendanceChart';
 import FinanceChart from '../../../components/FinanceChart';
 import EventCalendar from '../../../components/EventCalendar';
 import Announcements from '../../../components/Announcements';
-
-const dashboardStats = [
-    {
-        id: 1,
-        title: 'Students',
-        value: 6123,
-        date: '2024/2/15',
-        bg: '#D9CCFF',
-    },
-    {
-        id: 2,
-        title: 'Teachers',
-        value: 1123,
-        date: '2024/2/15',
-        bg: '#FFEAA7',
-    },
-    {
-        id: 3,
-        title: 'Parents',
-        value: 1123,
-        date: '2024/2/15',
-        bg: '#D9CCFF',
-    },
-    {
-        id: 4,
-        title: 'Staffs',
-        value: 1123,
-        date: '2024/2/15',
-        bg: '#FFEAA7',
-    },
-];
+import { useAppSelector } from '../../../hooks/hooks';
 
 const AdminPage = () => {
+    const students = useAppSelector((state) => state.student);
+    const teacher = useAppSelector((state) => state.teacher);
+    const dashboardStats = [
+        {
+            id: 1,
+            title: 'Students',
+            value: students.total,
+            date: '2024/2/15',
+            bg: '#D9CCFF',
+        },
+        {
+            id: 2,
+            title: 'Teachers',
+            value: teacher.total,
+            date: '2024/2/15',
+            bg: '#FFEAA7',
+        },
+        {
+            id: 3,
+            title: 'Parents',
+            value: 1123,
+            date: '2024/2/15',
+            bg: '#D9CCFF',
+        },
+        {
+            id: 4,
+            title: 'Staffs',
+            value: 1123,
+            date: '2024/2/15',
+            bg: '#FFEAA7',
+        },
+    ];
     return (
         <div className="flex gap-4 w-full">
             {/* LEFT MAIN */}
@@ -66,10 +68,10 @@ const AdminPage = () => {
                 </div>
 
                 {/* STUDENT ATTENDANCE SECTION */}
-                <div className="flex gap-4">
+                <div className="flex gap-4 p-4">
                     {/* Chart */}
-                    <div className="w-1/3 bg-white  p-4 rounded-lg">
-                        <p className="font-bold text-xl mb-2">Students</p>
+                    <div className="w-1/3 bg-white p-4 rounded-lg">
+                        <p className="font-bold text-xl mb-2 ">Students</p>
                         <CountChart />
                     </div>
 
