@@ -13,7 +13,7 @@ const Register = () => {
         userName: string;
         email: string;
         password: string;
-        confirmPassword: string;
+        confirmPassword: string | undefined;
     }
     const {
         register,
@@ -23,8 +23,8 @@ const Register = () => {
     const onSubmit: SubmitHandler<IFormInput> = async (dataFormInput) => {
         try {
             setDisable(true);
-            const { confirmPassword, ...data } = dataFormInput;
-            await registerAuth(data);
+            dataFormInput.confirmPassword = undefined;
+            await registerAuth(dataFormInput);
             toast.success('Thêm thành công');
             setDisable(false);
             navi('/auth/login');

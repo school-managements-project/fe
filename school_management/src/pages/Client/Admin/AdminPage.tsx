@@ -9,19 +9,22 @@ import Announcements from '../../../components/Announcements';
 import { useQuery } from '@tanstack/react-query';
 import { getStudent } from '../../../api/student';
 import { getTeacher } from '../../../api/teacher';
+import { useAppSelector } from '../../../hooks/hooks';
 
 const AdminPage = () => {
+    const query = useAppSelector((state) => state.filter.query);
+
     const { data: students } = useQuery({
         queryKey: ['student'],
         queryFn: async () => {
-            const { data } = await getStudent();
+            const { data } = await getStudent(query);
             return data;
         },
     });
     const { data: teacher } = useQuery({
         queryKey: ['teacher'],
         queryFn: async () => {
-            const { data } = await getTeacher();
+            const { data } = await getTeacher(query);
 
             return data;
         },
