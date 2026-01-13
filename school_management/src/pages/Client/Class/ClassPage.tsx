@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { Button, Select, Space, Spin, Table } from 'antd';
+import { Button, Select, Space, Spin, Table, Tag } from 'antd';
 import { toast } from 'react-toastify';
 import { queryClient } from '../../../api/useQuery';
 
@@ -22,6 +22,8 @@ const ClassPage = () => {
     const dispatch = useAppDispatch();
     const query = useAppSelector((state) => state.filter.query);
     const queryDebounce = useDebounce(query, 500);
+    const userString = localStorage.getItem('user');
+    const user = userString ? JSON.parse(userString) : null;
 
     //List Data + query
     const { data, isPending, error } = useQuery({
@@ -84,14 +86,17 @@ const ClassPage = () => {
         },
         {
             title: 'Actions',
-            render: (_: any, record: IClass) => (
-                <Space>
-                    <Button onClick={() => mutationDelete.mutate(String(record._id))}>Xóa</Button>
-                    <FormModalClass idClass={String(record._id)}>
-                        <Button>Sửa</Button>
-                    </FormModalClass>
-                </Space>
-            ),
+            render: (_: any, record: IClass) =>
+                user?.role === 'admin' ? (
+                    <Space>
+                        <Button onClick={() => mutationDelete.mutate(String(record._id))}>Xóa</Button>
+                        <FormModalClass idClass={String(record._id)}>
+                            <Button>Sửa</Button>
+                        </FormModalClass>
+                    </Space>
+                ) : (
+                    <Tag>Teacher không có quyền</Tag>
+                ),
         },
     ];
 
@@ -121,11 +126,13 @@ const ClassPage = () => {
                         ]}
                         onChange={(e) => dispatch(setQueryFilter({ ...query, _sort: e }))}
                     />
-                    <FormModalClass>
-                        <Button style={{ fontSize: 16 }}>
-                            <UserAddOutlined />
-                        </Button>
-                    </FormModalClass>
+                    {user?.role === 'admin' && (
+                        <FormModalClass>
+                            <Button style={{ fontSize: 16 }}>
+                                <UserAddOutlined />
+                            </Button>
+                        </FormModalClass>
+                    )}
                 </div>
             </div>
             <Table columns={columns} dataSource={data} rowKey="_id" />

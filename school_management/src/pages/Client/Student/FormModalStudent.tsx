@@ -221,7 +221,7 @@ const FormModalStudent = ({ children, idStudent }: Props) => {
                             type="submit"
                             className="px-8 py-2.5 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition shadow-sm"
                         >
-                            {id ? 'Sửa giáo viên' : 'Thêm giáo viên'}
+                            {id ? 'Sửa học sinh' : 'Thêm học sinh'}
                         </button>
                     </div>
                 </form>

@@ -1,7 +1,7 @@
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-toastify';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { loginSchema } from '../../schema/authSchema';
 import { loginAuth } from '../../api/auth';
 import { useState } from 'react';
@@ -87,12 +87,12 @@ const Login = () => {
                     >
                         Đăng nhập
                     </button>
-                    <p className="text-center text-sm mt-4 text-white/70">
-                        Chưa có tài khoản?{' '}
-                        <Link to={`/auth/register`} className="text-pink-300 hover:underline">
-                            Đăng ký ngay
-                        </Link>
-                    </p>
+                    {/* <p className="text-center text-sm mt-4 text-white/70">
+                                Chưa có tài khoản?{' '}
+                                <Link to={`/auth/register`} className="text-pink-300 hover:underline">
+                                    Đăng ký ngay
+                                </Link>
+                            </p> */}
                 </form>
             </div>
         </div>

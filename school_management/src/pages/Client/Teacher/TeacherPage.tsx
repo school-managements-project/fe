@@ -114,7 +114,7 @@ const TeacherPage = () => {
                 record?.classes?.length > 0 ? (
                     record?.classes?.map((classId) => {
                         const data = dataClass?.find((c: IClass) => c._id === classId);
-                        return <Tag>{data?.name}</Tag>;
+                        return <Tag color='blue'>{data?.name}</Tag>;
                     })
                 ) : (
                     <div>Chưa có</div>
@@ -123,7 +123,7 @@ const TeacherPage = () => {
         {
             title: 'Actions',
             render: (_: any, record: ITeacher) =>
-                user.role === 'admin' ? (
+                user?.role === 'admin' ? (
                     <Space>
                         <Button onClick={() => mutationDelete.mutate(String(record._id))}>Xóa</Button>
                         <FormModalTeacher idTeacher={String(record._id)}>
@@ -163,7 +163,7 @@ const TeacherPage = () => {
                         onChange={(e) => dispatch(setQueryFilter({ ...query, sex: e }))}
                     />
                     {/* Modal Thêm sản phẩm */}
-                    {user.role == 'admin' && (
+                    {user?.role == 'admin' && (
                         <FormModalTeacher>
                             <Button style={{ fontSize: 16 }}>
                                 <UserAddOutlined />

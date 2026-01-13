@@ -14,6 +14,7 @@ const clientRoutes = [
         element: <LayoutClient />,
         children: [
             {
+                index: true,
                 Component: AdminPage,
             },
             {
@@ -59,7 +60,8 @@ const clientRoutes = [
             {
                 path: 'events',
                 Component: EventPage,
-            }, {
+            },
+            {
                 path: 'events/:id',
                 Component: EventPage,
             },

@@ -79,7 +79,7 @@ const EventPage = () => {
             dataIndex: 'class',
             render: (_: any, record: IEvent) => {
                 const data = dataClass?.find((item: IClass) => String(item._id) === String(record.class));
-                return <Tag>{data?.name}</Tag>;
+                return <Tag color='blue'>{data?.name}</Tag>;
             },
         },
 

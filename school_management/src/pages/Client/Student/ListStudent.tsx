@@ -20,7 +20,8 @@ const ListStudent = () => {
     const dispatch = useAppDispatch();
     const query = useAppSelector((state) => state.filter.query);
     const queryDebounce = useDebounce(query, 500);
-
+    const userString = localStorage.getItem('user');
+    const user = userString ? JSON.parse(userString) : null;
     //List Data + query Student
     const { data, isPending, error } = useQuery({
         queryKey: [key, queryDebounce],
@@ -83,20 +84,23 @@ const ListStudent = () => {
             dataIndex: 'class',
             render: (_: any, record: IStudent) => {
                 const data = dataClass?.find((c: IClass) => String(c._id) === String(record.class));
-                return <Tag>{data?.name}</Tag>;
+                return <Tag color="blue">{data?.name}</Tag>;
             },
         },
 
         {
             title: 'Actions',
-            render: (_: any, record: IStudent) => (
-                <Space>
-                    <Button onClick={() => mutationDelete.mutate(String(record._id))}>Xóa</Button>
-                    <FormModalStudent idStudent={String(record._id)}>
-                        <Button>Sửa</Button>
-                    </FormModalStudent>
-                </Space>
-            ),
+            render: (_: any, record: IStudent) =>
+                user?.role === 'admin' ? (
+                    <Space>
+                        <Button onClick={() => mutationDelete.mutate(String(record._id))}>Xóa</Button>
+                        <FormModalStudent idStudent={String(record._id)}>
+                            <Button>Sửa</Button>
+                        </FormModalStudent>
+                    </Space>
+                ) : (
+                    <Tag>Teacher không có quyền</Tag>
+                ),
         },
     ];
 
@@ -126,11 +130,13 @@ const ListStudent = () => {
                         ]}
                         onChange={(e) => dispatch(setQueryFilter({ ...query, sex: e }))}
                     />
-                    <FormModalStudent>
-                        <Button style={{ fontSize: 16 }}>
-                            <UserAddOutlined />
-                        </Button>
-                    </FormModalStudent>
+                    {user?.role == 'admin' && (
+                        <FormModalStudent>
+                            <Button style={{ fontSize: 16 }}>
+                                <UserAddOutlined />
+                            </Button>
+                        </FormModalStudent>
+                    )}
                 </div>
             </div>
             <Table columns={columns} dataSource={data} rowKey="_id" />
