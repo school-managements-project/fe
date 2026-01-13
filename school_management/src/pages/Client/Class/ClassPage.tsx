@@ -57,7 +57,7 @@ const ClassPage = () => {
             dataIndex: '_id',
         },
         {
-            title: 'Tên lớp',
+            title: 'Tên lớpp',
             dataIndex: 'name',
             render: (text: string, record: any) => (
                 <Link to={`/classes/detail/${record._id}`} className="text-blue-600 hover:underline">
