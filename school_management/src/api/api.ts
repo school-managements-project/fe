@@ -4,7 +4,7 @@ const api = axios.create({
     headers: {
         'Content-Type': 'application/json',
     },
-    baseURL: 'https://api-class-o1lo.onrender.com/api/thuannh/',
+    baseURL: 'http://localhost:8888/',
 });
 api.interceptors.request.use((config) => {
     const token = localStorage.getItem('accessToken');
