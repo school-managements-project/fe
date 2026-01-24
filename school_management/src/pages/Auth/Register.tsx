@@ -33,12 +33,10 @@ const Register = () => {
     //         toast.error(error.response?.data.message);
     //     }
     // };
-
     // return (
     //     // <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500">
     //     //     <div className="bg-white/10 backdrop-blur-lg p-8 rounded-2xl shadow-2xl w-full max-w-md text-white border border-white/20">
     //     //         <h2 className="text-3xl font-bold text-center mb-6">Đăng ký tài khoản</h2>
-
     //     //         <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
     //     //             {/* UserName */}
     //     //             <div>
@@ -51,7 +49,6 @@ const Register = () => {
     //     //                 />
     //     //                 {errors.userName && <p className="text-red-300 text-sm mt-1">{errors.userName.message}</p>}
     //     //             </div>
-
     //     //             {/* Email */}
     //     //             <div>
     //     //                 <label className="block text-sm mb-1 font-medium">Email</label>
@@ -63,7 +60,6 @@ const Register = () => {
     //     //                 />
     //     //                 {errors.email && <p className="text-red-300 text-sm mt-1">{errors.email.message}</p>}
     //     //             </div>
-
     //     //             {/* Password */}
     //     //             <div>
     //     //                 <label className="block text-sm mb-1 font-medium">Mật khẩu</label>
@@ -75,7 +71,6 @@ const Register = () => {
     //     //                 />
     //     //                 {errors.password && <p className="text-red-300 text-sm mt-1">{errors.password.message}</p>}
     //     //             </div>
-
     //     //             {/* Confirm Password */}
     //     //             <div>
     //     //                 <label className="block text-sm mb-1 font-medium">Xác nhận mật khẩu</label>
@@ -89,7 +84,6 @@ const Register = () => {
     //     //                     <p className="text-red-300 text-sm mt-1">{errors.confirmPassword.message}</p>
     //     //                 )}
     //     //             </div>
-
     //     //             {/* Agree to terms */}
     //     //             <div className="flex items-start space-x-2 mt-2">
     //     //                 <input
@@ -110,7 +104,6 @@ const Register = () => {
     //     //                     .
     //     //                 </label>
     //     //             </div>
-
     //     //             {/* Button */}
     //     //             <button
     //     //                 type="submit"
@@ -119,7 +112,6 @@ const Register = () => {
     //     //             >
     //     //                 Đăng ký
     //     //             </button>
-
     //     //             <p className="text-center text-sm mt-4 text-white/70">
     //     //                 Đã có tài khoản?
     //     //                 <Link to={`/auth/login`} className="text-pink-300 hover:underline">
