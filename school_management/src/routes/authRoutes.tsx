@@ -1,5 +1,6 @@
 // import Register from '../pages/Auth/Register';
 import LayoutAuth from '../layouts/LayoutAuth';
+import AcceptInvite from '../pages/Auth/AcceptInvite';
 import Login from '../pages/Auth/Login';
 
 const authRoutes = [
@@ -18,6 +19,10 @@ const authRoutes = [
             {
                 path: 'login',
                 Component: Login,
+            },
+            {
+                path: 'accept-invite',
+                Component: AcceptInvite,
             },
         ],
     },

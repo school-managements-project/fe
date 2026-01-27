@@ -1,3 +1,4 @@
+import axios from 'axios';
 import type { ITeacher } from '../types/ITeacher';
 import api from './api';
 // interface IRegister {
@@ -17,3 +18,9 @@ export const loginAuth = async (body: ILogin) => {
     const { data } = await api.post('auth/login', body);
     return data;
 };
+
+const API = 'http://localhost:8888/auth';
+
+export const getInviteInfo = (token: any) => axios.get(`${API}/invite-info?token=${token}`);
+
+export const completeRegister = (data: any) => axios.patch(`${API}/complete-register`, data);
