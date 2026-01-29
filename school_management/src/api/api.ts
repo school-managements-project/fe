@@ -4,7 +4,7 @@ const api = axios.create({
     headers: {
         'Content-Type': 'application/json',
     },
-    baseURL: 'http://localhost:8888/',
+    baseURL: 'http://localhost:8888/api/',
 });
 api.interceptors.request.use((config) => {
     const token = localStorage.getItem('accessToken');
