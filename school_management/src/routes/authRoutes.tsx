@@ -1,7 +1,10 @@
 // import Register from '../pages/Auth/Register';
 import LayoutAuth from '../layouts/LayoutAuth';
 import AcceptInvite from '../pages/Auth/AcceptInvite';
+import ForgotPassword from '../pages/Auth/ForgotPassword';
 import Login from '../pages/Auth/Login';
+import Profile from '../pages/Auth/Profile/Profile';
+import ResetPassword from '../pages/Auth/ResetPassword';
 
 const authRoutes = [
     {
@@ -23,6 +26,19 @@ const authRoutes = [
             {
                 path: 'accept-invite',
                 Component: AcceptInvite,
+            },
+
+            {
+                path: 'forgot-password',
+                Component: ForgotPassword,
+            },
+            {
+                path: 'reset-password',
+                Component: ResetPassword,
+            },
+            {
+                path: 'profile',
+                Component: Profile,
             },
         ],
     },

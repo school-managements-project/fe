@@ -24,10 +24,14 @@ const Login = () => {
         try {
             setDisable(true);
             const { data: response } = await loginAuth(data);
+            // luôn lưu token
+            localStorage.setItem('accessToken', response.accessToken);
+
+            // chỉ lưu user khi muốn nhớ
             if (saveData) {
                 localStorage.setItem('user', JSON.stringify(response.user));
-                localStorage.setItem('accessToken', JSON.stringify(response.accessToken));
             }
+
             toast('Đăng nhập thành công');
             navi('/');
             setDisable(false);
@@ -93,6 +97,15 @@ const Login = () => {
                                     Đăng ký ngay
                                 </Link>
                             </p> */}
+
+                    <p className="text-center text-sm mt-4 text-white/80">
+                        <span
+                            className="text-pink-300 hover:underline cursor-pointer"
+                            onClick={() => navi('/auth/forgot-password')}
+                        >
+                            Quên mật khẩu?
+                        </span>
+                    </p>
                 </form>
             </div>
         </div>

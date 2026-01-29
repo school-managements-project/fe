@@ -19,6 +19,17 @@ export const loginAuth = async (body: ILogin) => {
     return data;
 };
 
+export const changePassword = (data: { oldPassword: string; newPassword: string; confirmPassword: string }) => {
+    return api.post('auth/change-password', data);
+};
+
+export const forgotPassword = (data: { email: string }) => {
+    return api.post('auth/forgot-password', data);
+};
+
+export const resetPassword = (data: { token: string; newPassword: string; confirmPassword: string }) => {
+    return api.post('auth/reset-password', data);
+};
 const API = 'http://localhost:8888/auth';
 
 export const getInviteInfo = (token: any) => axios.get(`${API}/invite-info?token=${token}`);

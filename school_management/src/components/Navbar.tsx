@@ -22,7 +22,7 @@ const Navbar = ({ collapsed, setCollapsed }: Props) => {
                 navi('/auth/login');
                 break;
             case 'Profile':
-                console.log('Profile');
+                navi('/auth/profile');
                 break;
             case 'Settings':
                 console.log('Settings');
